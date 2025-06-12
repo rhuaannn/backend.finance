@@ -33,13 +33,24 @@ namespace backend.finance.application.Service
             account = _mapToAccount.MapAccount(account, dto);
             return await _accountRepository.UpdateAccount(account);
         }
-        public async Task<Account> GetAccountById(Guid id)
+        public async Task<Account?> GetAccountById(Guid id)
         {
+            var account = await _accountRepository.GetAccountById(id);
+            if (account == null)
+            {
+                throw new ArgumentException("Account is not exist!");
+            }
+
+            if (account.Id != id)
+            {
+                throw new Exception("Account not exist!");
+            }
             return await _accountRepository.GetAccountById(id);
         }
         public async Task<List<Account>> GetAllAccounts()
         {
             return await _accountRepository.GetAllAccounts();
         }
+
     }
 }

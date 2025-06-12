@@ -2,24 +2,30 @@
 {
     public class Transfer
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public double Amount { get; set; }
-        public Account AccountId { get; set; }
-        public User UserId { get; set; }
-        public ICollection<Account> Accounts { get; set; } = new List<Account>();
-        public ICollection<User> Users { get; set; } = new List<User>();
+
+        public decimal Amount { get; set; }
+
+        public Guid SourceAccountId { get; set; }
+        public Account SourceAccount { get; set; }
+
+        public Guid DestinationAccountId { get; set; }
+        public Account DestinationAccount { get; set; }
+
+        public Guid UserId { get; set; }
+        public User User { get; set; }
 
         protected Transfer()
         {
-            
         }
 
-        public Transfer(DateTime createdAt, double amount)
+        public Transfer(decimal amount, Guid sourceAccountId, Guid destinationAccountId, Guid userId)
         {
-            CreatedAt = createdAt;
             Amount = amount;
-
+            SourceAccountId = sourceAccountId;
+            DestinationAccountId = destinationAccountId;
+            UserId = userId;
         }
     }
 }

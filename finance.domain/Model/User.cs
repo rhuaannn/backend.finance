@@ -23,6 +23,7 @@ namespace backend.finance.domain.Model
             CPF = cpf;
             Email = email;
             Password = password;
+            Id = Guid.NewGuid(); 
         }
     }
 }
