@@ -41,8 +41,9 @@ namespace backend.finance.application.Mapping
 
         public List<ResponseAccountDto> MapToResponseDtoList(List<Account> accounts)
         {
-            return accounts.Select(MapToResponseDto).ToList();
+            return accounts?.Select(MapToResponseDto).ToList() ?? new List<ResponseAccountDto>();
         }
+
     }
 
 }

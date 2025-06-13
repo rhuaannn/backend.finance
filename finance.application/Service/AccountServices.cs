@@ -9,48 +9,57 @@ namespace backend.finance.application.Service
     public class AccountServices : IAccount
     {
         private readonly IAccountRepository _accountRepository;
-        private readonly IUserRepository _userRepository;
         private readonly MapToAccount _mapToAccount;
+        
  
         public AccountServices(IAccountRepository accountRepository, IUserRepository userRepository, MapToAccount mapToAccount)
         {
             _accountRepository = accountRepository;
-            _userRepository = userRepository;
             _mapToAccount = mapToAccount;
         }
-        public async Task<Account> CreateAccount(CreateAccountDto dto)
+
+        public async Task<ResponseAccountDto> CreateAccount(CreateAccountDto dto)
         {
-            var user = await _userRepository.GetUserById(dto.UserId);
-            if(user == null) throw new Exception("Usuário não encontrado.");
             var account = _mapToAccount.MapAccount(dto);
-            if(account.Balance < 0) throw new Exception("Saldo inicial não pode ser negativo.");
-            return await _accountRepository.CreateAccount(account);
+            var createdAccount = await _accountRepository.CreateAccount(account);
+            return _mapToAccount.MapToResponseDto(createdAccount);
         }
-        public async Task<Account> UpdateAccount(Guid id, UpdateAccountDto dto)
-        {
-            var account = await _accountRepository.GetAccountById(id);
-            if (account == null) throw new Exception("Conta não encontrada.");
-            account = _mapToAccount.MapAccount(account, dto);
-            return await _accountRepository.UpdateAccount(account);
-        }
-        public async Task<Account?> GetAccountById(Guid id)
+
+        public async Task<ResponseAccountDto> GetAccountById(Guid id)
         {
             var account = await _accountRepository.GetAccountById(id);
             if (account == null)
             {
-                throw new ArgumentException("Account is not exist!");
+                throw new KeyNotFoundException($"Account with ID {id} not found.");
             }
+            return _mapToAccount.MapToResponseDto(account);
 
-            if (account.Id != id)
-            {
-                throw new Exception("Account not exist!");
-            }
-            return await _accountRepository.GetAccountById(id);
         }
-        public async Task<List<Account>> GetAllAccounts()
+
+        public async Task<List<ResponseAccountDto>> GetAllAccounts()
         {
-            return await _accountRepository.GetAllAccounts();
+            var accounts = await _accountRepository.GetAllAccounts();
+         
+            return _mapToAccount.MapToResponseDtoList(accounts);
         }
 
+        public async Task<ResponseAccountDto> UpdateAccount(Guid id, UpdateAccountDto dto)
+        {
+            var existingAccount = await _accountRepository.GetAccountById(id);
+            if (existingAccount == null)
+            {
+                throw new KeyNotFoundException($"Account with ID {id} not found.");
+            }
+            var updatedAccount = _mapToAccount.MapAccount(existingAccount, dto);
+
+            var result = await _accountRepository.UpdateAccount(updatedAccount);
+            if (result == null)
+            {
+                throw new Exception("Failed to update account.");
+            }
+            return _mapToAccount.MapToResponseDto(result);
+        }
+
+   
     }
 }
