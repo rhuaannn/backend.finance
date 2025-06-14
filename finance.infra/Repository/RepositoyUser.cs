@@ -28,7 +28,7 @@ namespace backend.finance.infra.Repository
             return await _context.Users.FirstOrDefaultAsync(u => u.Email.EmailAddress == email);
         }
 
-        public async Task<User?> GetUserById(Guid id)
+        public async Task<User> GetUserById(Guid id)
         {
             return await _context.Users.FindAsync(id);
         }

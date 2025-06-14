@@ -21,6 +21,8 @@ builder.Services.AddDbContext<Connection>(options =>
 builder.Services.AddScoped<IAccountRepository, RepositoryAccount>();
 builder.Services.AddScoped<IUserRepository, RepositoyUser>();
 builder.Services.AddScoped<IAccount, AccountServices>();
+builder.Services.AddScoped<ITransferAccountRepository, RepositoryTransfer>();
+builder.Services.AddScoped<ITransferAccount, TransferAccountService>();
 builder.Services.AddScoped<MapToAccount>();
 
 var app = builder.Build();

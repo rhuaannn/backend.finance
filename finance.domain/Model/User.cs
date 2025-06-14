@@ -2,16 +2,15 @@
 
 namespace backend.finance.domain.Model
 {
-    public class User
+    public class User : Entity
     {
-        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public CPF CPF { get; set; }
         public Email Email { get; set; }
         public string Password { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        public List<Account> Accounts { get; set; } = new List<Account>();  
+        public IEnumerable<Account> Accounts { get; set; }
 
         protected User()
         {
@@ -23,7 +22,7 @@ namespace backend.finance.domain.Model
             CPF = cpf;
             Email = email;
             Password = password;
-            Id = Guid.NewGuid(); 
+            
         }
     }
 }

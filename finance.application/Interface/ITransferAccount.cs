@@ -4,6 +4,6 @@ namespace backend.finance.application.Interface;
 
 public interface ITransferAccount
 {
-    Task<Transfer> TransferAccount(TransferDTO dto);
-    Task<Transfer> HistoryTransferAccount(TransferDTO dto);
+    Task<Transfer> TransferAccount(CreateTransferDTO dto);
+    Task <List<Transfer>> HistoryTransferAccount(Guid accountId);
 } 

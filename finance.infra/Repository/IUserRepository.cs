@@ -6,7 +6,7 @@ namespace backend.finance.infra.Repository
     {
         Task<User> CreateUser(User user);
         Task<User> GetUserById(Guid id);
-        Task<User> GetUserByEmail(string email);
+        Task<User?> GetUserByEmail(string email);
         Task<List<User>> GetAllUsers();
         Task<User?> UpdateUser(User user);
 
