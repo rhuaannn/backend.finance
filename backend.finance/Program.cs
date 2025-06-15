@@ -5,7 +5,6 @@ using backend.finance.application.Service;
 using backend.finance.infra.Context;
 using backend.finance.infra.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

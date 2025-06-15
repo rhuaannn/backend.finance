@@ -29,10 +29,24 @@ public class TransferAccountService : ITransferAccount
         if (dto.SourceAccountId == dto.DestinationAccountId)
             throw new ArgumentException("Não é permitido transferir para a mesma conta.");
 
-        var transfer = new Transfer(dto.Amount, dto.SourceAccountId, dto.DestinationAccountId, dto.UserId);
+        if (sourceAccount.Balance < dto.Amount)
+            throw new InvalidOperationException("Saldo insuficiente na conta de origem.");
 
-        return await _transferAccountRepository.CreateTransferAccount(transfer);
+        // Atualiza os saldos
+        sourceAccount.Balance -= dto.Amount;
+        destinationAccount.Balance += dto.Amount;
+
+        // Persiste as atualizações nas contas
+        await _accountRepository.UpdateAccount(sourceAccount);
+        await _accountRepository.UpdateAccount(destinationAccount);
+
+        // Cria o registro da transferência
+        var transfer = new Transfer(dto.Amount, dto.SourceAccountId, dto.DestinationAccountId, dto.UserId);
+        var createdTransfer = await _transferAccountRepository.CreateTransferAccount(transfer);
+
+        return createdTransfer;
     }
+
 
     public async Task<List<Transfer>> HistoryTransferAccount(Guid accountId)
     {

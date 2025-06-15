@@ -17,7 +17,8 @@ namespace backend.finance.application.Service
         }
         public async Task<ResponseUserDto> CreateUserAsync(CreateUserDto userDto)
         {
-           var createdUser = _mapToUser.MapUser(userDto);
+            userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+            var createdUser = _mapToUser.MapUser(userDto);
           
             var user = await _userRepository.CreateUser(createdUser);
             if (user == null)

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\finance.domain\backend.finance.domain.csproj" />
     <ProjectReference Include="..\finance.infra\backend.finance.infra.csproj" />
   </ItemGroup>
