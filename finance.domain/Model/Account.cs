@@ -10,7 +10,9 @@
             public User User { get; set; }
             public Guid UserId { get; set; } 
             public decimal Balance { get; set; }
-            public ICollection<Transfer> Transfers { get; set; }
+            public ICollection<Transfer> SentTransfers { get; set; } = new List<Transfer>();
+            public ICollection<Transfer> ReceivedTransfers { get; set; } = new List<Transfer>();
+
 
         protected Account()
         { 

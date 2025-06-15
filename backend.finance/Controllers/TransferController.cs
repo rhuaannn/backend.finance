@@ -31,5 +31,11 @@ namespace backend.finance.api.Controllers
                 return StatusCode(500, new { message = "Erro interno do servidor.", details = ex.Message });
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetTransfer(Guid id)
+        {
+            var getTransfer = await _transferAccountService.HistoryTransferAccount(id);
+            return Ok(getTransfer);
+        }
     }
 }

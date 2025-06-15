@@ -11,6 +11,7 @@ namespace backend.finance.domain.Model
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public IEnumerable<Account> Accounts { get; set; }
+        public ICollection<Transfer> Transfers { get; set; } = new List<Transfer>();
 
         protected User()
         {

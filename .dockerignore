@@ -1,0 +1,17 @@
+
+# Pastas de resultados de build local
+**/bin/
+**/obj/
+
+# Cache e arquivos de IDE
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Arquivos de controle de versão
+.git/
+.gitignore
+
+# Arquivos Docker Compose (o Docker Daemon já sabe o que fazer com eles)
+docker-compose*.yml

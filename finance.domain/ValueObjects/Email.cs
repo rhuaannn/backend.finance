@@ -10,12 +10,12 @@
         }
         public Email(string value)
         {
+            EmailAddress = value;
             if (!IsValid())
             {
                throw new ArgumentException("Invalid email address format.", nameof(value));
             }
 
-            EmailAddress = value;
 
         }
 
